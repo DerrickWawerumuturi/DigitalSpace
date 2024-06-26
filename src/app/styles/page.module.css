@@ -1,0 +1,33 @@
+.productList {
+  display: flex;
+  overflow-x: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.product {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+@keyframes scrollImages {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product {
+    animation: scrollImages 10s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .productList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

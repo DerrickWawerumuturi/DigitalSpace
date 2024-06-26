@@ -1,0 +1,33 @@
+.imgdiv {
+  margin-bottom: 10px;
+}
+
+.img {
+  border-radius: 100%;
+}
+
+.navItems {
+  margin-top: 9px;
+}
+
+.navtons {
+  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  @apply items-center;
+}
+
+.div {
+  display: flex;
+}
+
+.primary {
+  @apply bg-white sticky z-50 top-0 inset-x-0 h-16;
+}
+
+@media (max-width: 768px) {
+  .navtons {
+    display: grid;
+    @apply grid grid-cols-1;
+  }
+}
