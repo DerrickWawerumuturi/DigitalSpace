@@ -67,7 +67,7 @@ const NavItem = ({
                                             className='group relative text-base sm:text-sm'>
                                             <div className='relative aspect-video overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75'>
                                                 <Image
-                                                    src={item.imgSrc}
+                                                    src={item.imageSrc}
                                                     alt='product category image'
                                                     fill
                                                     className='object-cover object-center'

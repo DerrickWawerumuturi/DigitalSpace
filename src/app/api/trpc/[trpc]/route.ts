@@ -7,10 +7,8 @@ const handler = (req: Request) => {
     endpoint: "/api/trpc",
     req,
     router: appRouter,
+    // @ts-expect-error context already passed from express middleware
     createContext: () => ({}),
-    onError: ({ error }) => {
-      console.error("shida ni", error);
-    },
   });
 };
 

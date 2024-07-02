@@ -8,13 +8,21 @@ dotenv.config({
   path: path.resolve(__dirname, "../.env"),
 });
 
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.resend.com",
+//   secure: true,
+//   port: 465,
+//   auth: {
+//     user: "resend",
+//     pass: process.env.RESEND_API_KEY,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  host: "smtp.resend.com",
-  secure: true,
-  port: 465,
+  service: "gmail",
   auth: {
-    user: "resend",
-    pass: process.env.RESEND_API_KEY,
+    user: "wawerumuturi57@gmail.com",
+    pass: "ikfb vcuc mete upgk",
   },
 });
 
