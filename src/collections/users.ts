@@ -1,4 +1,4 @@
-import { PrimaryActionEmailHtml } from "@/components/emails/PrimaryActionEmail";
+import { PrimaryActionEmailHtml } from "../components/emails/PrimaryActionEmail";
 import { Access, CollectionConfig } from "payload/types";
 
 const adminAndUser: Access = ({ req: { user } }) => {
@@ -51,7 +51,7 @@ export const Users: CollectionConfig = {
         condition: () => false,
       },
       type: "relationship",
-      relationTo: "products_files",
+      relationTo: "product_files",
       hasMany: true,
     },
     {

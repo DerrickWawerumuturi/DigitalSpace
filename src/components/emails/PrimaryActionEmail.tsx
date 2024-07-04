@@ -1,3 +1,4 @@
+import React from "react"
 import { Body, Button, Container, Head, Hr, Html, Img, Preview, render, Section, Text } from "@react-email/components"
 
 interface EmailTemplateProps {
@@ -22,7 +23,7 @@ export const EmailTemplate = ({ actionLabel, buttonText, href }: EmailTemplatePr
                     />
                     <Text style={paragraph}>Hi there,</Text>
                     <Text style={paragraph}>
-                        Welcome to DigitalHippo, the marketplace for high quality digital
+                        Welcome to DigitalSpace, the marketplace for high quality digital
                         goods. Use the button below to {actionLabel}.
                     </Text>
                     <Section style={btnContainer}>
@@ -33,7 +34,7 @@ export const EmailTemplate = ({ actionLabel, buttonText, href }: EmailTemplatePr
                     <Text style={paragraph}>
                         Best,
                         <br />
-                        The DigitalHippo team
+                        The DigitalSpace team
                     </Text>
                     <Hr style={hr} />
                     <Text style={footer}>

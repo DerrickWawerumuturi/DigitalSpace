@@ -7,6 +7,7 @@ import { inferAsyncReturnType } from "@trpc/server";
 import nextBuild from "next/dist/build";
 import { PayloadRequest } from "payload/types";
 import { parse } from "url";
+import path from "path";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;

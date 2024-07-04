@@ -1,4 +1,4 @@
-"ue client"
+"use client"
 
 import { usePathname } from "next/navigation"
 import MaxWidthWrapper from "./MaxWidthWrapper"
