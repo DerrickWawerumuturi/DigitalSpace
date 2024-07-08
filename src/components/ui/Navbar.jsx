@@ -19,7 +19,7 @@ const Navbar = async () => {
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
-              <MobileNav />
+              <MobileNav user={user} />
 
               <div className="ml-4 flex lg:ml-0">
                 <Link href="/">
@@ -32,7 +32,7 @@ const Navbar = async () => {
               </div>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                <div className="lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   {user ? null : (
                     <Link
                       href="/sign-in"
@@ -53,9 +53,10 @@ const Navbar = async () => {
                   ) : (
                     <Link
                       href="/sign-up"
-                      className={buttonVariants({
-                        variant: "ghost",
-                      })}
+                      className={`
+                        mt-4 ml-2
+                        ${buttonVariants({ variant: "blue" })}
+                      `}
                     >
                       Create account
                     </Link>

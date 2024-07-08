@@ -59,30 +59,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPayloadClient = void 0;
+exports.getPayloadClient = exports.sendVerificationEmail = void 0;
 var dotenv_1 = __importDefault(require("dotenv"));
 var path_1 = __importDefault(require("path"));
 var payload_1 = __importDefault(require("payload"));
-var nodemailer_1 = __importDefault(require("nodemailer"));
+var node_mailjet_1 = __importDefault(require("node-mailjet"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var crypto_1 = __importDefault(require("crypto"));
+var PrimaryActionEmail_1 = require("./components/emails/PrimaryActionEmail");
+var bcrypt_1 = __importDefault(require("bcrypt"));
 dotenv_1.default.config({
     path: path_1.default.resolve(__dirname, "../.env"),
 });
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.resend.com",
-//   secure: true,
-//   port: 465,
-//   auth: {
-//     user: "resend",
-//     pass: process.env.RESEND_API_KEY,
-//   },
-// });
-var transporter = nodemailer_1.default.createTransport({
-    service: "gmail",
-    auth: {
-        user: "wawerumuturi57@gmail.com",
-        pass: "ikfb vcuc mete upgk",
-    },
-});
+// Generate JWT Secret
+var generateJWTSecret = function () {
+    return crypto_1.default.randomBytes(8).toString("hex");
+};
+var jwtSecret = generateJWTSecret();
+var mailJet = node_mailjet_1.default.apiConnect("".concat(process.env.EMAIL_API_KEY), "".concat(process.env.EMAIL_API_SECRET_KEY));
 var cached = global.payload;
 if (!cached) {
     cached = global.payload = {
@@ -90,6 +84,67 @@ if (!cached) {
         promise: null,
     };
 }
+var sendVerificationEmail = function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
+    var token, hashedToken, verificationLink, emailHTML, emailData, response, err_1;
+    var userEmail = _b.userEmail, userId = _b.userId;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                token = jsonwebtoken_1.default.sign({ id: userId }, jwtSecret, { expiresIn: "1h" });
+                hashedToken = bcrypt_1.default.hashSync(token, 10);
+                return [4 /*yield*/, payload_1.default.update({
+                        collection: "users",
+                        id: userId,
+                        data: {
+                            _verified: false,
+                            _verificationToken: hashedToken,
+                        },
+                    })];
+            case 1:
+                _c.sent();
+                verificationLink = "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/verify-email?token=").concat(hashedToken);
+                emailHTML = (0, PrimaryActionEmail_1.PrimaryActionEmailHtml)({
+                    actionLabel: "Verify Your Account",
+                    buttonText: "Verify your account",
+                    href: verificationLink,
+                });
+                emailData = {
+                    Messages: [
+                        {
+                            From: {
+                                Email: "wawerumuturi57@gmail.com",
+                                Name: "Digital Space",
+                            },
+                            To: [
+                                {
+                                    Email: userEmail,
+                                    Name: "User",
+                                },
+                            ],
+                            Subject: "Confirm Your Email",
+                            HTMLPart: emailHTML,
+                        },
+                    ],
+                };
+                _c.label = 2;
+            case 2:
+                _c.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, mailJet
+                        .post("send", { version: "v3.1" })
+                        .request(emailData)];
+            case 3:
+                response = _c.sent();
+                console.log("Email sent:", response.body);
+                return [2 /*return*/, true];
+            case 4:
+                err_1 = _c.sent();
+                console.error("Error sending email:", err_1);
+                return [2 /*return*/, false];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.sendVerificationEmail = sendVerificationEmail;
 var getPayloadClient = function () {
     var args_1 = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -108,11 +163,7 @@ var getPayloadClient = function () {
                         return [2 /*return*/, cached.client];
                     }
                     if (!cached.promise) {
-                        cached.promise = payload_1.default.init(__assign({ email: {
-                                transport: transporter,
-                                fromAddress: "wawerumuturi57@gmail.com",
-                                fromName: "DigitalSpace",
-                            }, secret: process.env.PAYLOAD_SECRET, local: (initOptions === null || initOptions === void 0 ? void 0 : initOptions.express) ? false : true }, (initOptions || {})));
+                        cached.promise = payload_1.default.init(__assign({ secret: process.env.PAYLOAD_SECRET, local: (initOptions === null || initOptions === void 0 ? void 0 : initOptions.express) ? false : true }, (initOptions || {})));
                     }
                     _d.label = 1;
                 case 1:

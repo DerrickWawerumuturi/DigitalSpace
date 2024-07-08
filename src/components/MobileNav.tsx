@@ -6,11 +6,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import LogOut from './LogOut'
 
-const MobileNav = () => {
+const MobileNav = (user: any) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
 
     const pathname = usePathname()
+
 
     // whenever we click an item in the menu and navigate away, we want to close the menu
     useEffect(() => {
@@ -60,7 +62,7 @@ const MobileNav = () => {
                             </button>
                         </div>
 
-                        <div className='mt-2'>
+                        <div className='mt-2 border-b border-gray-200 mb-6'>
                             <ul>
                                 {PRODUCT_CATEGORIES.map((category) => (
                                     <li
@@ -100,28 +102,35 @@ const MobileNav = () => {
                             </ul>
                         </div>
 
-                        <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
-                            <div className='flow-root'>
-                                <Link
-                                    onClick={() => closeOnCurrent('/sign-in')}
-                                    href='/sign-in'
-                                    className='-m-2 block p-2 font-medium text-gray-900'>
-                                    Sign in
-                                </Link>
+                        {user ? (
+                            <div className='flow-root items-center ml-6'>
+                                <LogOut />
                             </div>
-                            <div className='flow-root'>
-                                <Link
-                                    onClick={() => closeOnCurrent('/sign-up')}
-                                    href='/sign-up'
-                                    className='-m-2 block p-2 font-medium text-gray-900'>
-                                    Sign up
-                                </Link>
+                        ) : (
+                            <div className='space-y-6 border-t border-gray-200 px-4 py-6'>
+                                <div className='flow-root'>
+
+                                    <Link
+                                        onClick={() => closeOnCurrent('/sign-in')}
+                                        href='/sign-in'
+                                        className='-m-2 block p-2 font-medium text-gray-900'>
+                                        Sign in
+                                    </Link>
+                                </div>
+                                <div className='flow-root'>
+                                    <Link
+                                        onClick={() => closeOnCurrent('/sign-up')}
+                                        href='/sign-up'
+                                        className='-m-2 block p-2 font-medium text-gray-900'>
+                                        Sign up
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

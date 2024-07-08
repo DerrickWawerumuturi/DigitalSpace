@@ -40,19 +40,20 @@ exports.authRouter = void 0;
 var account_credentials_validator_1 = require("../lib/Validators/account-credentials-validator");
 var trpc_1 = require("./trpc");
 var get_payload_1 = require("../get-payload");
+var get_payload_2 = require("../get-payload");
 var server_1 = require("@trpc/server");
 var zod_1 = require("zod");
 exports.authRouter = (0, trpc_1.router)({
     createPayloadUser: trpc_1.publicProcedure
         .input(account_credentials_validator_1.AuthCredentialsValidator)
         .mutation(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var email, password, payload, users;
+        var email, password, payload, users, newUser, emailSent;
         var input = _b.input;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     email = input.email, password = input.password;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    return [4 /*yield*/, (0, get_payload_2.getPayloadClient)()];
                 case 1:
                     payload = _c.sent();
                     return [4 /*yield*/, payload.find({
@@ -77,7 +78,19 @@ exports.authRouter = (0, trpc_1.router)({
                             },
                         })];
                 case 3:
-                    _c.sent();
+                    newUser = _c.sent();
+                    return [4 /*yield*/, (0, get_payload_1.sendVerificationEmail)({
+                            userEmail: email,
+                            userId: newUser.id,
+                        })];
+                case 4:
+                    emailSent = _c.sent();
+                    if (!emailSent) {
+                        throw new server_1.TRPCError({
+                            code: "INTERNAL_SERVER_ERROR",
+                            message: "Failed to send verification email",
+                        });
+                    }
                     return [2 /*return*/, { success: true, sentToEmail: email }];
             }
         });
@@ -91,11 +104,11 @@ exports.authRouter = (0, trpc_1.router)({
             switch (_c.label) {
                 case 0:
                     token = input.token;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    return [4 /*yield*/, (0, get_payload_2.getPayloadClient)()];
                 case 1:
                     payload = _c.sent();
                     return [4 /*yield*/, payload.verifyEmail({
-                            collection: "user",
+                            collection: "users",
                             token: token,
                         })];
                 case 2:
@@ -116,7 +129,7 @@ exports.authRouter = (0, trpc_1.router)({
                 case 0:
                     email = input.email, password = input.password;
                     res = ctx.res;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    return [4 /*yield*/, (0, get_payload_2.getPayloadClient)()];
                 case 1:
                     payload = _c.sent();
                     _c.label = 2;

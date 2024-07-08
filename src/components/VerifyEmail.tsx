@@ -15,6 +15,8 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
     })
 
     if (isError) {
+        console.log(isError)
+        console.log(token)
         return <div className="flex flex-col items-center gap-2">
             <XCircle className="h-8 w-8 text-red-600" />
             <h3 className="font-semibold text-xl">There was a problem</h3>
@@ -31,6 +33,7 @@ const VerifyEmail = ({ token }: VerifyEmailProps) => {
                     <Image
                         src="/hippo-email-sent.png"
                         fill
+                        priority={true}
                         alt="email wwas sent"
                     />
                 </div>

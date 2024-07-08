@@ -4,10 +4,19 @@ import { usePathname } from "next/navigation"
 import MaxWidthWrapper from "./MaxWidthWrapper"
 import { Icons } from "./Icons"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/hooks/use-auth"
 
 const Footer = () => {
     const pathname = usePathname()
+    const { signOut } = useAuth()
+    const router = useRouter()
     const pathsToMinimize = ["/verify-email", "/sign-up", "/sign-in"]
+
+    const SellerSignIn = async () => {
+        await signOut();
+        router.push("/sign-in?as=seller")
+    }
     return (
         <footer className="bg-white flex-grow-0">
             <MaxWidthWrapper>
@@ -28,7 +37,7 @@ const Footer = () => {
                                     <h3 className="font-semibold text-gray-900">Become a seller</h3>
                                     <p className="mt-2 text-sm text-muted-foreground">
                                         If you&apos;d like to sell high-digital products, you can do so in minutes.{' '}
-                                        <Link href={"/sign-in?as=seller"} className="whitespace-nowrap font-medium text-black hover:text-zinc-900">Get started &rarr; </Link>
+                                        <button onClick={SellerSignIn} className="whitespace-nowrap font-medium text-black hover:text-zinc-900">Get started &rarr; </button>
                                     </p>
                                 </div>
                             </div>

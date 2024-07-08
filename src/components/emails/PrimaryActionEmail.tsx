@@ -15,7 +15,7 @@ export const EmailTemplate = ({ actionLabel, buttonText, href }: EmailTemplatePr
             <Body style={main}>
                 <Container style={container}>
                     <Img
-                        src={`${process.env.NEXT_PUBLIC_SERVER_URL}/digitalSpace.png`}
+                        src={`/digitalSpace.png`}
                         width="150"
                         height="150"
                         alt="DigitalSpace"

@@ -1,7 +1,6 @@
 'use client'
 
 import { TQueryValidator } from '@/lib/Validators/query-validator'
-import { Product } from '@/payload-types'
 import { trpc } from '@/trpc/client'
 import Link from 'next/link'
 import ProductListing from './ProductListing'
@@ -36,6 +35,7 @@ const ProductReel = (props: ProductReelProps) => {
   let map: any[] = []
   if (products && products.length) {
     map = products
+
   } else if (isLoading) {
     map = new Array<null>(query.limit ?? FALLBACK_LIMIT).fill(null)
   }

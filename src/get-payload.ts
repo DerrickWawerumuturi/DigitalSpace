@@ -2,29 +2,28 @@ import dotenv from "dotenv";
 import path from "path";
 import payload, { Payload } from "payload";
 import { InitOptions } from "payload/config";
-import nodemailer from "nodemailer";
+import Mailjet from "node-mailjet";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { PrimaryActionEmailHtml } from "./components/emails/PrimaryActionEmail";
+import bcrypt from "bcrypt";
+import { Users } from "./collections/users";
 
 dotenv.config({
   path: path.resolve(__dirname, "../.env"),
 });
 
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.resend.com",
-//   secure: true,
-//   port: 465,
-//   auth: {
-//     user: "resend",
-//     pass: process.env.RESEND_API_KEY,
-//   },
-// });
+// Generate JWT Secret
+const generateJWTSecret = () => {
+  return crypto.randomBytes(8).toString("hex");
+};
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "wawerumuturi57@gmail.com",
-    pass: "ikfb vcuc mete upgk",
-  },
-});
+const jwtSecret = generateJWTSecret();
+
+const mailJet = Mailjet.apiConnect(
+  `${process.env.EMAIL_API_KEY}`,
+  `${process.env.EMAIL_API_SECRET_KEY}`
+);
 
 let cached = (global as any).payload;
 
@@ -39,6 +38,66 @@ interface Args {
   initOptions?: Partial<InitOptions>;
 }
 
+interface VerifyProps {
+  userId: string | number;
+  userEmail: string;
+}
+
+export const sendVerificationEmail = async ({
+  userEmail,
+  userId,
+}: VerifyProps) => {
+  const token = jwt.sign({ id: userId }, jwtSecret, { expiresIn: "1h" });
+  const hashedToken = bcrypt.hashSync(token, 10);
+
+  await payload.update({
+    collection: "users",
+    id: userId,
+    data: {
+      _verified: false,
+      _verificationToken: hashedToken,
+    },
+  });
+
+  const verificationLink = `${process.env.NEXT_PUBLIC_SERVER_URL}/verify-email?token=${hashedToken}`;
+
+  const emailHTML = PrimaryActionEmailHtml({
+    actionLabel: "Verify Your Account",
+    buttonText: "Verify your account",
+    href: verificationLink,
+  });
+
+  const emailData = {
+    Messages: [
+      {
+        From: {
+          Email: "wawerumuturi57@gmail.com",
+          Name: "Digital Space",
+        },
+        To: [
+          {
+            Email: userEmail,
+            Name: "User",
+          },
+        ],
+        Subject: "Confirm Your Email",
+        HTMLPart: emailHTML,
+      },
+    ],
+  };
+
+  try {
+    const response = await mailJet
+      .post("send", { version: "v3.1" })
+      .request(emailData);
+    console.log("Email sent:", response.body);
+    return true;
+  } catch (err) {
+    console.error("Error sending email:", err);
+    return false;
+  }
+};
+
 export const getPayloadClient = async ({
   initOptions,
 }: Args = {}): Promise<Payload> => {
@@ -52,11 +111,6 @@ export const getPayloadClient = async ({
 
   if (!cached.promise) {
     cached.promise = payload.init({
-      email: {
-        transport: transporter,
-        fromAddress: "wawerumuturi57@gmail.com",
-        fromName: "DigitalSpace",
-      },
       secret: process.env.PAYLOAD_SECRET,
       local: initOptions?.express ? false : true,
       ...(initOptions || {}),

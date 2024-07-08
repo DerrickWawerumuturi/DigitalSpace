@@ -24,7 +24,7 @@ var EmailTemplate = function (_a) {
         react_1.default.createElement(components_1.Preview, null, "The marketplace for high-quality digital goods."),
         react_1.default.createElement(components_1.Body, { style: main },
             react_1.default.createElement(components_1.Container, { style: container },
-                react_1.default.createElement(components_1.Img, { src: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/digitalSpace.png"), width: "150", height: "150", alt: "DigitalSpace", style: logo }),
+                react_1.default.createElement(components_1.Img, { src: "/digitalSpace.png", width: "150", height: "150", alt: "DigitalSpace", style: logo }),
                 react_1.default.createElement(components_1.Text, { style: paragraph }, "Hi there,"),
                 react_1.default.createElement(components_1.Text, { style: paragraph },
                     "Welcome to DigitalSpace, the marketplace for high quality digital goods. Use the button below to ",

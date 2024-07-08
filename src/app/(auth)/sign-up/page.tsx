@@ -12,7 +12,6 @@ import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/lib/Valid
 import { trpc } from "@/trpc/client";
 import { toast } from 'sonner';
 import { ZodError } from "zod";
-import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -31,7 +30,9 @@ const Page = () => {
                 return
             }
 
-
+            if (err.data?.code === 'INTERNAL_SERVER_ERROR') {
+                toast.error('Failed to end verification code.Please try again')
+            }
 
             if (err instanceof ZodError) {
                 toast.error(err.issues[0].message)
@@ -49,7 +50,8 @@ const Page = () => {
     })
 
     const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-        mutate({ email, password })
+        console.log({ email, password })
+        mutate({ email, password });
     }
 
     return <>

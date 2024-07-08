@@ -6,24 +6,26 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-import { TypeWithID } from "payload/types";
-
 export interface Config {
   collections: {
     users: User;
     products: Product;
-    media: Media;
     product_files: ProductFile;
+    media: Media;
     orders: Order;
     "payload-preferences": PayloadPreference;
     "payload-migrations": PayloadMigration;
   };
   globals: {};
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
 export interface User {
   id: string;
   products?: (string | Product)[] | null;
-  product_files?: (string | ProductFile)[] | null;
+  products_files?: (string | ProductFile)[] | null;
   role: "admin" | "user";
   updatedAt: string;
   createdAt: string;
@@ -38,6 +40,10 @@ export interface User {
   lockUntil?: string | null;
   password: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
 export interface Product {
   id: string;
   user?: (string | null) | User;
@@ -56,6 +62,10 @@ export interface Product {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "product_files".
+ */
 export interface ProductFile {
   id: string;
   user?: (string | null) | User;
@@ -67,7 +77,13 @@ export interface ProductFile {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
 export interface Media {
   id: string;
   user?: (string | null) | User;
@@ -79,6 +95,8 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
   sizes?: {
     thumbnail?: {
       url?: string | null;
@@ -106,14 +124,22 @@ export interface Media {
     };
   };
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
 export interface Order {
   id: string;
   _isPaid: boolean;
   user: string | User;
-  products: (string | Product | (TypeWithID & Record<string, unknown>))[];
+  products: (string | Product)[];
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-preferences".
+ */
 export interface PayloadPreference {
   id: string;
   user: {
@@ -133,6 +159,10 @@ export interface PayloadPreference {
   updatedAt: string;
   createdAt: string;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-migrations".
+ */
 export interface PayloadMigration {
   id: string;
   name?: string | null;
@@ -142,6 +172,6 @@ export interface PayloadMigration {
 }
 
 declare module "payload" {
-  // @ts-expect-error generatet types error
+  // @ts-expect-error
   export interface GeneratedTypes extends Config {}
 }

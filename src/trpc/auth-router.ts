@@ -1,7 +1,7 @@
 import { AuthCredentialsValidator } from "../lib/Validators/account-credentials-validator";
 import { publicProcedure, router } from "./trpc";
+import { sendVerificationEmail } from "../get-payload";
 import { getPayloadClient } from "../get-payload";
-import { TRPCClientError } from "@trpc/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -12,6 +12,7 @@ export const authRouter = router({
       const { email, password } = input;
       const payload = await getPayloadClient();
 
+      // Check if the user already exists
       const { docs: users } = await payload.find({
         collection: "users",
         overrideAccess: true,
@@ -23,7 +24,8 @@ export const authRouter = router({
       });
       if (users.length !== 0) throw new TRPCError({ code: "CONFLICT" });
 
-      await payload.create({
+      // Create a new user
+      const newUser = await payload.create({
         collection: "users",
         data: {
           email,
@@ -31,6 +33,19 @@ export const authRouter = router({
           role: "user",
         },
       });
+
+      const emailSent = await sendVerificationEmail({
+        userEmail: email,
+        userId: newUser.id,
+      });
+
+      if (!emailSent) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to send verification email",
+        });
+      }
+
       return { success: true, sentToEmail: email };
     }),
   verifyEmail: publicProcedure
@@ -41,7 +56,7 @@ export const authRouter = router({
       const payload = await getPayloadClient();
 
       const isVerified = await payload.verifyEmail({
-        collection: "user",
+        collection: "users",
         token,
       });
       if (!isVerified) throw new TRPCError({ code: "UNAUTHORIZED" });
