@@ -83,7 +83,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                     line_items = [];
                     filteredProducts.forEach(function (product) {
                         line_items.push({
-                            price: product.priceId,
+                            price: String(product.priceId),
                             quantity: 1,
                         });
                     });

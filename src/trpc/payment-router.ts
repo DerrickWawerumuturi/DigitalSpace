@@ -42,7 +42,7 @@ export const paymentRouter = router({
 
       filteredProducts.forEach((product) => {
         line_items.push({
-          price: product.priceId!,
+          price: String(product.priceId!),
           quantity: 1,
         });
       });
