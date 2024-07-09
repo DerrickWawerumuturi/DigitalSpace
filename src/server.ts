@@ -8,6 +8,9 @@ import nextBuild from "next/dist/build";
 import { PayloadRequest } from "payload/types";
 import { parse } from "url";
 import path from "path";
+import bodyParser from "body-parser";
+import { IncomingMessage } from "http";
+import { stripeWebhookHandler } from "./webhooks";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -21,8 +24,17 @@ const createContext = ({
 });
 
 export type ExpressContext = inferAsyncReturnType<typeof createContext>;
+export type webhookRequest = IncomingMessage & { rawBody: Buffer };
 
 const start = async () => {
+  const webhookMiddleWare = bodyParser.json({
+    verify: (req: webhookRequest, _, buffer) => {
+      req.rawBody = buffer;
+    },
+  });
+
+  app.post("/api/webhooks/stripe", webhookMiddleWare, stripeWebhookHandler);
+
   const payload = await getPayloadClient({
     initOptions: {
       express: app,

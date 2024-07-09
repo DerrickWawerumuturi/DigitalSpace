@@ -67,7 +67,7 @@ var get_payload_1 = require("../get-payload");
 var payment_router_1 = require("./payment-router");
 exports.appRouter = (0, trpc_1.router)({
     auth: auth_router_1.authRouter,
-    payment: payment_router_1.PaymentRouter,
+    payment: payment_router_1.paymentRouter,
     getInfiniteProducts: trpc_1.publicProcedure
         .input(zod_1.z.object({
         limit: zod_1.z.number().min(1).max(100),
