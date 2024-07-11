@@ -58,7 +58,7 @@ export function constructMetadata({
       creator: "@derrickmuturi",
     },
     icons,
-    metadataBase: new URL("digitalspace-production.up.railway.app"),
+    metadataBase: new URL("https://digitalspace-production.up.railway.app"),
     ...(noIndex && {
       robots: {
         index: false,
