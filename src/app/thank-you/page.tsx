@@ -157,7 +157,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                             </div>
                         </div>
 
-                        <PaymentStatus isPaid={order._isPaid} orderEmail={(order.user as User).email} orderId={order.id} />
+                        <PaymentStatus isPaid={order._isPaid} orderEmail={(order.user as User).email} orderId={order.id} purchasedItemIds={[order.id]} />
                         <div className="mt-16 border-t border-gray-200 text-right pt-3">
                             <Link href="/products" className="text-sm mt-4 font-medium text-blue-600 hover:text-blue-500">
                                 Continue shopping &rarr;
