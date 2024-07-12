@@ -1,3 +1,4 @@
+import CodeReveal from "@/components/CodeReveal"
 import PaymentStatus from "@/components/PaymentStatus"
 import { buttonVariants } from "@/components/ui/button"
 import { PRODUCT_CATEGORIES } from "@/config"
@@ -106,30 +107,18 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                                                 />
                                             ) : null}
                                         </div>
-                                        <div className="flex-auto flex flex-col justify-between px-2">
+                                        <div className="flex-auto flex flex-col justify-between px-2 ml-10">
                                             <div className="space-y-1">
 
                                                 <h3 className="text-gray-900 -mt-2">{product.name}</h3>
                                                 <p className="my-1">Category: {label}</p>
                                             </div>
                                             {order._isPaid ?
-                                                (
-                                                    <>
-                                                        <a
-                                                            href={downloadUrl}
-                                                            download={product.name}
-                                                            className="text-blue-600 hover:underline underline-offset-2"
-                                                        >
-                                                            Download Image
-                                                        </a>
-                                                        <a
-                                                            href={downloadUrl}
-                                                            download={downloadCode}
-                                                            className={buttonVariants({ variant: "blue" })}
-                                                        >
-                                                            Code
-                                                        </a>
-                                                    </>)
+                                                (<div className="flex items-center">
+                                                    <pre className="bg-gray-100 p-2 rounded-md">{downloadCode}</pre>
+                                                    <CodeReveal code={downloadCode} />
+                                                </div>
+                                                )
                                                 : null}
                                         </div>
                                         <p className="flex-none font-medium text-gray-900">
