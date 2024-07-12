@@ -168,7 +168,6 @@ export const Products: CollectionConfig = {
       type: "relationship",
       required: true,
       relationTo: "product_files",
-      hasMany: false,
     },
     {
       name: "approvedForSale",
