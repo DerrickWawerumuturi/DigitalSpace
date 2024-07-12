@@ -1,4 +1,5 @@
 import PaymentStatus from "@/components/PaymentStatus"
+import { buttonVariants } from "@/components/ui/button"
 import { PRODUCT_CATEGORIES } from "@/config"
 import { getPayloadClient } from "@/get-payload"
 import { getServerSideUser } from "@/lib/payload-utils"
@@ -91,6 +92,7 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                                 const label = PRODUCT_CATEGORIES.find(({ value }) => value === product.category)?.label
 
                                 const downloadUrl = (product.product_files as ProductFile).url as string
+                                const downloadCode = (product.product_files as ProductFile).code as string
 
                                 const { image } = product.images[0]
 
@@ -112,13 +114,22 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                                             </div>
                                             {order._isPaid ?
                                                 (
-                                                    <a
-                                                        href={downloadUrl}
-                                                        download={product.name}
-                                                        className="text-blue-600 hover:underline underline-offset-2"
-                                                    >
-                                                        Download asset
-                                                    </a>)
+                                                    <>
+                                                        <a
+                                                            href={downloadUrl}
+                                                            download={product.name}
+                                                            className="text-blue-600 hover:underline underline-offset-2"
+                                                        >
+                                                            Download Image
+                                                        </a>
+                                                        <a
+                                                            href={downloadUrl}
+                                                            download={downloadCode}
+                                                            className={buttonVariants({ variant: "blue" })}
+                                                        >
+                                                            Code
+                                                        </a>
+                                                    </>)
                                                 : null}
                                         </div>
                                         <p className="flex-none font-medium text-gray-900">

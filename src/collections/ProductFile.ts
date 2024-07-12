@@ -87,5 +87,14 @@ export const ProductFiles: CollectionConfig = {
       hasMany: false,
       required: true,
     },
+    {
+      name: "code",
+      type: "code",
+      label: "Code Editor",
+      required: true,
+      admin: {
+        language: "javascript",
+      },
+    },
   ],
 };

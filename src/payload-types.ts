@@ -60,6 +60,7 @@ export interface ProductFile {
   updatedAt: string;
   createdAt: string;
   url?: string | null;
+  code?: string | null;
   filename?: string | null;
   mimeType?: string | null;
   filesize?: number | null;
