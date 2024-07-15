@@ -24,7 +24,7 @@ export default function CodeReveal({ code }: CodeProps) {
 
     return (
         <div className="flex flex-col justify-center items-center ">
-            <div className="mb-5">
+            <div className="mb-5 mt-3">
                 <Button variant={'outline'} onClick={handleOpen}>
                     Code
                 </Button>
