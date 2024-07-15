@@ -22,7 +22,7 @@ export const ReceiptEmail = ({
     return (
         <Html>
             <Head />
-            <Preview>Your DigitalHippo Receipt</Preview>
+            <Preview>Your DigitalSpace Receipt</Preview>
 
             <Body style={main}>
                 <Container style={container}>

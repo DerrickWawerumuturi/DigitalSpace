@@ -115,7 +115,6 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
                                             </div>
                                             {order._isPaid ?
                                                 (<div className="flex items-center">
-                                                    <pre className="bg-gray-100 p-2 rounded-md">{downloadCode}</pre>
                                                     <CodeReveal code={downloadCode} />
                                                 </div>
                                                 )

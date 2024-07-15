@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DIGITAL SPACE
 
-## Getting Started
+Digital Space is an e-commerce website focused on supplying digital assets, mostly UI kits, and icons for developers to improve and modify their projects. The project is built using the MERN stack, with Next.js, Tailwind CSS, and Shadcn/ui.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Requirements
+- Installation
+- Configuration
+- Troubleshooting
+- FAQ
+- Maintainers
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Requirements
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project requires the following to be installed:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Node.js
+- MongoDB
+- npm or yarn
 
-## Learn More
+## Installation
 
-To learn more about Next.js, take a look at the following resources:
+Follow these steps to install and run the project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/DerrickWawerumuturi/DigitalSpace.git
+   ```
 
-## Deploy on Vercel
+2. Navigate to the project directory:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   cd digital-space
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Set up environment variables:
+
+   - Create a `.env` file in the root directory.
+   - Add the necessary environment variables (e.g., MongoDB URI, API keys).
+
+5. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+## Configuration
+
+1. Ensure MongoDB is running.
+2. Configure your environment variables in the `.env` file. Example:
+
+   ```.env
+   MONGODB_URI=mongodb://localhost:27017/digital-space
+   NEXT_PUBLIC_API_KEY=your-api-key
+   ```
+
+## Troubleshooting
+
+If you encounter issues, check the following:
+
+- Ensure all required environment variables are set correctly.
+- Make sure MongoDB is running and accessible.
+- Check for any errors in the terminal output and address them as needed.
+
+## Issues
+
+Failed to aquire an email domain so we used an Third-party-Api - Mailjet which takes about 5-10 minutes before sending an email
+
+## FAQ
+
+**Q: How do I add a new digital asset to the inventory?**
+
+**A:** Follow these steps:
+
+1. Navigate to the admin panel - Sign up as Seller or if you are logged in , click on my Account, seller Dashboard.
+2. Click on "Products".
+3. Fill in the required details and upload the asset files.
+4. Save the changes.
+
+**Q: How do I customize the UI components?**
+
+**A:** You can customize the UI components by modifying the corresponding files in the `components` directory. Tailwind CSS classes can be adjusted to change the styling as needed.
+
+## Maintainers
+
+- Derrick Muturi
+- Felix Kamau
