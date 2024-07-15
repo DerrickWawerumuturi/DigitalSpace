@@ -70,9 +70,6 @@ If you encounter issues, check the following:
 - Make sure MongoDB is running and accessible.
 - Check for any errors in the terminal output and address them as needed.
 
-## Issues
-
-Failed to aquire an email domain so we used an Third-party-Api - Mailjet which takes about 5-10 minutes before sending an email
 
 ## FAQ
 
