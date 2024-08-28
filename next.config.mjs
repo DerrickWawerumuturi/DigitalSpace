@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "digitalspace-production.up.railway.app",
+        hostname: "digital-space.vercel.app",
       },
     ],
   },
