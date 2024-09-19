@@ -44,6 +44,8 @@ const start = async () => {
     },
   });
 
+  app.use((req, res) => nextHandler(req, res));
+
   app.use(
     `/api/trpc`,
     trpcExpress.createExpressMiddleware({

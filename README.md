@@ -70,7 +70,6 @@ If you encounter issues, check the following:
 - Make sure MongoDB is running and accessible.
 - Check for any errors in the terminal output and address them as needed.
 
-
 ## FAQ
 
 **Q: How do I add a new digital asset to the inventory?**

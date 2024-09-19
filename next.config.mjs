@@ -6,10 +6,10 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
       },
-      {
-        protocol: "https",
-        hostname: "digital-space.vercel.app",
-      },
+      // {
+      //   protocol: "https",
+      //   hostname: "digital-space.vercel.app",
+      // },
     ],
   },
 };

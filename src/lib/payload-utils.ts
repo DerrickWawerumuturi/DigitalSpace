@@ -12,6 +12,7 @@ export const getServerSideUser = async (
     {
       headers: {
         Authorization: `JWT ${token}`,
+        "Content-Type": "application/json",
       },
     }
   );

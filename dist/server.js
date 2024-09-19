@@ -105,6 +105,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                     })];
             case 1:
                 payload = _a.sent();
+                app.use(function (req, res) { return (0, next_utils_1.nextHandler)(req, res); });
                 app.use("/api/trpc", trpcExpress.createExpressMiddleware({
                     router: trpc_1.appRouter,
                     createContext: createContext,
